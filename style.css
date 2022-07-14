@@ -1,0 +1,179 @@
+:root {
+	--background-color: #ccf2ff;
+	--color: #0086b3;
+	--color-muted: #90cee2;
+	--cell-size: 100px;
+	--mark-size: calc(var(--cell-size) * 0.9);
+}
+
+*,
+*::after,
+*::before {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	background-color: var(--background-color);
+}
+
+.container {
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 5em;
+}
+
+.container h1 {
+	font-family: "Fredoka One", cursive;
+	font-weight: 400;
+	font-size: 3rem;
+	color: var(--color);
+	text-transform: uppercase;
+}
+
+.board {
+	display: grid;
+	place-content: center;
+	place-items: center;
+	grid-template-columns: repeat(3, auto);
+}
+
+.cell {
+	width: var(--cell-size);
+	height: var(--cell-size);
+	border: 1px solid var(--color);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+	cursor: pointer;
+}
+
+.cell:nth-child(1),
+.cell:nth-child(2),
+.cell:nth-child(3) {
+	border-top: none;
+}
+
+.cell:nth-child(3n + 1) {
+	border-left: none;
+}
+
+.cell:nth-child(3n-3) {
+	border-right: none;
+}
+
+.cell:nth-child(7),
+.cell:nth-child(8),
+.cell:nth-child(9) {
+	border-bottom: none;
+}
+
+.cell.x::before,
+.cell.x::after,
+.cell.o::before,
+.cell.o::after {
+	background-color: var(--color);
+}
+
+.board.x .cell:not(.x):not(.o):hover::before,
+.board.x .cell:not(.x):not(.o):hover::after,
+.board.o .cell:not(.x):not(.o):hover::before,
+.board.o .cell:not(.x):not(.o):hover::after {
+	background-color: var(--color-muted);
+}
+
+.cell.x::before,
+.cell.x::after,
+.board.x .cell:not(.x):not(.o):hover::before,
+.board.x .cell:not(.x):not(.o):hover::after {
+	content: "";
+	position: absolute;
+	width: calc(var(--mark-size) * 0.15);
+	height: var(--mark-size);
+	border-radius: 4px;
+}
+
+.cell.x::before,
+.board.x .cell:not(.x):not(.o):hover::before {
+	transform: rotate(45deg);
+}
+
+.cell.x::after,
+.board.x .cell:not(.x):not(.o):hover::after {
+	transform: rotate(-45deg);
+}
+
+.cell.o::before,
+.cell.o::after,
+.board.o .cell:not(.x):not(.o):hover::before,
+.board.o .cell:not(.x):not(.o):hover::after {
+	content: "";
+	position: absolute;
+	border-radius: 50%;
+}
+
+.cell.o::before,
+.board.o .cell:not(.x):not(.o):hover::before {
+	width: var(--mark-size);
+	height: var(--mark-size);
+}
+
+.cell.o::after,
+.board.o .cell:not(.x):not(.o):hover::after {
+	width: calc(var(--mark-size) * 0.7);
+	height: calc(var(--mark-size) * 0.7);
+	background-color: var(--background-color);
+}
+
+.cell.x,
+.cell.o {
+	cursor: not-allowed;
+}
+
+.winner-message {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(0, 0, 0, 0.8);
+	flex-direction: column;
+	gap: 1em;
+	align-items: center;
+	justify-content: center;
+	font-family: "Poppins", sans-serif;
+	font-size: 3.5em;
+	font-weight: 600;
+	color: #fff;
+}
+
+#restart-btn {
+	padding: 1em 3em;
+	font-family: "Poppins", sans-serif;
+	font-size: 1.25rem;
+	font-weight: bold;
+	background-color: var(--background-color);
+	color: var(--color);
+	border: none;
+	border-radius: 8px;
+	outline: none;
+	cursor: pointer;
+	transition: all 200ms ease-out;
+}
+
+#restart-btn:hover,
+#restart-btn:focus {
+	transition: all 200ms ease-in;
+	color: var(--background-color);
+	background-color: var(--color);
+}
+
+.winner-message.show {
+	display: flex;
+}
